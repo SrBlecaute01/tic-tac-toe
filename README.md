@@ -8,10 +8,9 @@ utilizando consultas SQL para persistência e recuperação de dados.
 O jogo permite que dois jogadores disputem uma partida clássica de jogo da velha, com funcionalidades 
 como rastreamento de jogadas, gerenciamento de turnos e detecção automática de vencedores ou empates.
 
-<div style="display: flex; justify-content: center;">
-  <video src="https://github.com/SrBlecaute01/tic-tac-toe/tree/assets/preview.mp4" controls width="600"></video>
-</div>
----
+##
+
+https://github.com/user-attachments/assets/1d61a2ba-74a5-4e35-aca2-6f691600a143
 
 ## 🛠️ Tecnologias Utilizadas
 - **Linguagem de Programação**: Java (com recursos `--enable-preview`)
