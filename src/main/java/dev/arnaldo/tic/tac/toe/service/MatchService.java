@@ -7,10 +7,14 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Set;
 
+@SuppressWarnings("UnusedReturnValue")
 public interface MatchService {
 
     @NotNull
     Match createMatch(@NonNull String challengerId, @NonNull String opponentId);
+
+    @NotNull
+    Match updateMatch(@NonNull Match match);
 
     @NotNull
     Match findMatchById(long matchId);
@@ -23,8 +27,8 @@ public interface MatchService {
     @NotNull
     Set<Move> findMoves(long matchId);
 
-    boolean validateWinner(long matchId, long userId);
+    boolean existsWinner(long matchId, long userId);
 
-    boolean validateTie(long matchId);
+    boolean existsTie(long matchId);
 
 }

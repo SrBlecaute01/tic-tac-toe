@@ -2,6 +2,7 @@ package dev.arnaldo.tic.tac.toe.view;
 
 import dev.arnaldo.tic.tac.toe.TicTacToe;
 import dev.arnaldo.tic.tac.toe.domain.Match;
+import dev.arnaldo.tic.tac.toe.domain.User;
 import dev.arnaldo.tic.tac.toe.service.MatchService;
 import dev.arnaldo.tic.tac.toe.service.UserService;
 import dev.arnaldo.tic.tac.toe.util.TableUtil;
@@ -20,6 +21,7 @@ import org.jline.terminal.Terminal;
 
 import java.io.PrintWriter;
 import java.time.Duration;
+import java.time.Instant;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -98,23 +100,28 @@ public class MatchView {
                 MATCH_SERVICE.createMove(match.getId(), current.getId(), position);
 
                 ViewUtil.clearTerminal(reader.getTerminal());
-                if (MATCH_SERVICE.validateWinner(match.getId(), current.getId())) {
+                if (MATCH_SERVICE.existsWinner(match.getId(), current.getId())) {
+                    this.finishMatch(match, current);
                     this.renderTables(match, writer);
-                    writer.println("\nParabéns " + current.getName() + ", você venceu!");
+
+                    writer.println("Parabéns " + current.getName() + ", você venceu!");
                     writer.flush();
                     break;
                 }
 
-                if (MATCH_SERVICE.validateTie(match.getId())) {
+                if (MATCH_SERVICE.existsTie(match.getId())) {
+                    this.finishMatch(match, null);
                     this.renderTables(match, writer);
-                    writer.println("\nOops, parece que temos um empate!");
+
+                    writer.println("Oops, Parece que temos um empate!");
                     writer.flush();
                     break;
                 }
 
             } catch (UserInterruptException exception) {
                 log.info("User interrupt exception: {}", exception.getMessage());
-                return;
+                System.exit(0);
+                break;
 
             } catch (Exception exception) {
                 ViewUtil.clearTerminal(reader.getTerminal());
@@ -124,6 +131,13 @@ public class MatchView {
             }
         }
 
+    }
+
+    private void finishMatch(@NotNull Match match, @Nullable User winner) {
+        match.setWinner(winner);
+        match.setFinishedAt(Instant.now());
+
+        MATCH_SERVICE.updateMatch(match);
     }
 
     private void renderTables(@NotNull Match match, @NotNull PrintWriter writer) {

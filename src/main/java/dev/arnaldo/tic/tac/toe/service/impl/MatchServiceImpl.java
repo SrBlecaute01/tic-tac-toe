@@ -10,7 +10,6 @@ import dev.arnaldo.tic.tac.toe.service.MatchService;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import java.time.Instant;
 import java.util.Set;
@@ -41,6 +40,13 @@ public class MatchServiceImpl implements MatchService {
                 .startedAt(Instant.now())
                 .build();
 
+        this.matchRepository.save(match);
+        return match;
+    }
+
+    @NotNull
+    @Override
+    public Match updateMatch(@NonNull Match match) {
         this.matchRepository.save(match);
         return match;
     }
@@ -95,12 +101,12 @@ public class MatchServiceImpl implements MatchService {
     }
 
     @Override
-    public boolean validateWinner(long matchId, long userId) {
+    public boolean existsWinner(long matchId, long userId) {
         return this.matchRepository.existsWinner(matchId, userId);
     }
 
     @Override
-    public boolean validateTie(long matchId) {
+    public boolean existsTie(long matchId) {
         return this.matchRepository.existsTie(matchId);
     }
 

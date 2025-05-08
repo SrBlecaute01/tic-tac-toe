@@ -47,9 +47,10 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Override
     public void save(@NotNull User user) {
-        this.executor.execute(UserQueryType.INSERT_ON_CONFLICT.getQuery(),
-                consumer -> this.prepareStatement(user, consumer),
-                result -> user.setId(result.getLong(1)));
+        this.executor.execute(UserQueryType.INSERT_ON_CONFLICT.getQuery(), consumer -> this.prepareStatement(user, consumer), result -> {
+            if (user.getId() != null) return;
+            user.setId(result.getLong(1));
+        });
     }
 
     @Override

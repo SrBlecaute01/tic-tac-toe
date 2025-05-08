@@ -90,8 +90,6 @@ public class TableUtil {
         }
 
         table.setTextAlignment(TextAlignment.CENTER);
-
-
         return table;
     }
 

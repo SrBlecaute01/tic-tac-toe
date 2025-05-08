@@ -1,12 +1,10 @@
 package dev.arnaldo.tic.tac.toe.repository.match.impl;
 
 import com.jaoow.sql.executor.SQLExecutor;
-import dev.arnaldo.tic.tac.toe.TicTacToe;
 import dev.arnaldo.tic.tac.toe.domain.Match;
 import dev.arnaldo.tic.tac.toe.repository.match.MatchAdapter;
 import dev.arnaldo.tic.tac.toe.repository.match.MatchQueryType;
 import dev.arnaldo.tic.tac.toe.repository.match.MatchRepository;
-import dev.arnaldo.tic.tac.toe.repository.move.MoveQueryType;
 import dev.arnaldo.tic.tac.toe.repository.user.UserRepository;
 import lombok.NonNull;
 import lombok.SneakyThrows;
@@ -14,7 +12,6 @@ import org.jetbrains.annotations.NotNull;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.Statement;
 import java.sql.Timestamp;
 import java.util.List;
 import java.util.Objects;
@@ -45,9 +42,10 @@ public class MatchRepositoryImpl implements MatchRepository {
 
     @Override
     public void save(@NotNull Match match) {
-        this.executor.execute(MatchQueryType.INSERT_ON_CONFLICT.getQuery(),
-                consumer -> this.prepare(match, consumer),
-                result -> match.setId(result.getLong(1)));
+        this.executor.execute(MatchQueryType.INSERT_ON_CONFLICT.getQuery(), consumer -> this.prepare(match, consumer), result -> {
+            if (match.getId() != null) return;
+            match.setId(result.getLong(1));
+        });
     }
 
     @Override
@@ -67,14 +65,14 @@ public class MatchRepositoryImpl implements MatchRepository {
 
     @Override
     public @NotNull Optional<Long> findCurrentTurn(long matchId) {
-        return this.executor.query(MatchQueryType.SELECT_CURRENT_USER.getQuery(),
+        return this.executor.query(MatchQueryType.SELECT_CURRENT_TURN.getQuery(),
                 consumer -> consumer.setLong(1, matchId),
                 result -> result.getLong("current_player_id"));
     }
 
     @Override
     public boolean existsWinner(long matchId, long userId) {
-        return this.executor.query(MatchQueryType.SELECT_WINNER.getQuery(), statement -> {
+        return this.executor.query(MatchQueryType.EXISTS_WINNER.getQuery(), statement -> {
             statement.setLong(1, matchId);
             statement.setLong(2, userId);
         }, ResultSet::next).orElse(false);
@@ -82,7 +80,7 @@ public class MatchRepositoryImpl implements MatchRepository {
 
     @Override
     public boolean existsTie(long matchId) {
-        return this.executor.query(MatchQueryType.SELECT_TIE.getQuery(), statement -> {
+        return this.executor.query(MatchQueryType.EXISTS_TIE.getQuery(), statement -> {
             statement.setLong(1, matchId);
         }, ResultSet::next).orElse(false);
     }

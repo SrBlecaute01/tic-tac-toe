@@ -24,12 +24,8 @@ public class MoveAdapter implements SQLResultAdapter<Move> {
         final var userId = result.getLong("user_id");
         final var position = result.getInt("position");
         final var createdAt = result.getTimestamp("created_at");
-
-        final var match = this.matchRepository.findById(matchId)
-                .orElseThrow(() -> new RuntimeException("match not found with id: " + matchId));
-
-        final var user = this.userRepository.findById(userId)
-                .orElseThrow(() -> new RuntimeException("user not found with id: " + userId));
+        final var match = this.matchRepository.findById(matchId).orElseThrow(() -> new RuntimeException("match not found with id: " + matchId));
+        final var user = this.userRepository.findById(userId).orElseThrow(() -> new RuntimeException("user not found with id: " + userId));
 
         return Move.builder()
                 .match(match)

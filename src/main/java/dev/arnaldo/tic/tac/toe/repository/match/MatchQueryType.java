@@ -21,14 +21,14 @@ public enum MatchQueryType {
             "started_at = excluded.started_at, " +
             "finished_at = excluded.finished_at;"),
 
-    SELECT_CURRENT_USER(
+    SELECT_CURRENT_TURN(
             "SELECT CASE COUNT(DISTINCT moves.position) % 2 WHEN 0 THEN matches.challenger ELSE matches.opponent END AS current_player_id " +
             "FROM tic_tac_toe_matches matches " +
             "LEFT JOIN tic_tac_toe_moves moves " +
             "ON moves.match_id = matches.id " +
             "WHERE matches.id = ?;"),
 
-    SELECT_WINNER(
+    EXISTS_WINNER(
             "SELECT " +
             "moves.match_id, " +
             "users.id, " +
@@ -44,7 +44,7 @@ public enum MatchQueryType {
             "GROUP BY win_moves.id " +
             "HAVING COUNT(DISTINCT moves.position) >= 3;"),
 
-    SELECT_TIE(
+    EXISTS_TIE(
             "SELECT matches.id " +
             "FROM tic_tac_toe_matches matches " +
             "LEFT JOIN tic_tac_toe_moves moves " +
