@@ -97,19 +97,19 @@ public class MatchView {
             try {
                 this.renderTables(match, writer);
 
-                final var currentId = MATCH_SERVICE.findCurrentTurn(match.getId());
-                final var current = currentId == match.getChallenger().getId() ? match.getChallenger() : match.getOpponent();
-                final var input = reader.readLine("Turno de: " + current.getName() + ". Digite a posição: ");
+                final var turnId = MATCH_SERVICE.findCurrentTurn(match.getId());
+                final var turnUser = turnId == match.getChallenger().getId() ? match.getChallenger() : match.getOpponent();
+                final var input = reader.readLine("Turno de: " + turnUser.getName() + ". Digite a posição: ");
                 final var position = NumberUtils.toInt(input);
 
-                MATCH_SERVICE.createMove(match.getId(), current.getId(), position);
+                MATCH_SERVICE.createMove(match.getId(), turnUser.getId(), position);
 
                 ViewUtil.clearTerminal(reader.getTerminal());
-                if (MATCH_SERVICE.existsWinner(match.getId(), current.getId())) {
-                    this.finishMatch(match, current);
+                if (MATCH_SERVICE.existsWinner(match.getId(), turnUser.getId())) {
+                    this.finishMatch(match, turnUser);
                     this.renderTables(match, writer);
 
-                    writer.println("Parabéns " + current.getName() + ", você venceu!");
+                    writer.println("Parabéns " + turnUser.getName() + ", você venceu!");
                     writer.flush();
                     break;
                 }
