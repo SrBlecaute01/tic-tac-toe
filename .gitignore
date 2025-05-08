@@ -37,5 +37,6 @@ build/
 ### Mac OS ###
 .DS_Store
 
+.idea/
 TicTacToe-1.0.0.jar
 data/
