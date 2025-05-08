@@ -10,6 +10,7 @@ import dev.arnaldo.tic.tac.toe.util.view.ViewUtil;
 import lombok.NonNull;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.math.NumberUtils;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -73,7 +74,11 @@ public class MatchView {
             final var challenger = reader.readLine("Digite o seu nome ou ID: ");
             final var opponent = reader.readLine("Digite o nome do adversário ou ID: ");
 
-            return MATCH_SERVICE.createMatch(challenger, opponent);
+            if (StringUtils.isBlank(challenger) || StringUtils.isBlank(opponent)) {
+                throw new RuntimeException("Os nomes não podem ser vazios");
+            }
+
+            return MATCH_SERVICE.createMatch(challenger.trim(), opponent.trim());
 
         } catch (Exception exception) {
             ViewUtil.clearTerminal(reader.getTerminal());

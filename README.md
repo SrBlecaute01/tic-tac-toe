@@ -8,6 +8,9 @@ utilizando consultas SQL para persistência e recuperação de dados.
 O jogo permite que dois jogadores disputem uma partida clássica de jogo da velha, com funcionalidades 
 como rastreamento de jogadas, gerenciamento de turnos e detecção automática de vencedores ou empates.
 
+<div style="display: flex; justify-content: center;">
+  <video src="https://github.com/SrBlecaute01/tic-tac-toe/tree/assets/preview.mp4" controls width="600"></video>
+</div>
 ---
 
 ## 🛠️ Tecnologias Utilizadas
@@ -18,7 +21,7 @@ como rastreamento de jogadas, gerenciamento de turnos e detecção automática d
    - [Lombok](https://projectlombok.org/) para redução de código boilerplate
    - [JLine](https://jline.github.io/) para interação no terminal
    - [Apache Logback](https://logback.qos.ch/) para logging
-   - [MyBatis](https://mybatis.org/) para mapeamento objeto-relacional (ORM)
+   - [MyBatis](https://mybatis.org/) para execução do script SQL
    - [HikariCP](https://github.com/brettwooldridge/HikariCP) para gerenciamento de conexões
    - [SQL Provider](https://github.com/Jaoow/sql-provider) para abstração de consultas SQL
    - [AsciiTable](https://github.com/vdmeer/asciitable) para exibição de tabelas no terminal

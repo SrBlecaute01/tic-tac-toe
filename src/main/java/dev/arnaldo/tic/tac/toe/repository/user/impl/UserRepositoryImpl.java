@@ -34,9 +34,10 @@ public class UserRepositoryImpl implements UserRepository {
     @NotNull
     @Override
     public Optional<User> findByIdOrName(String value) {
-        return this.executor.query(UserQueryType.SELECT_BY_ID_OR_NAME.getQuery(),
-                statement -> statement.setString(1, value),
-                User.class);
+        return this.executor.query(UserQueryType.SELECT_BY_ID_OR_NAME.getQuery(), statement -> {
+            statement.setString(1, value);
+            statement.setString(2, value);
+        }, User.class);
     }
 
     @NotNull

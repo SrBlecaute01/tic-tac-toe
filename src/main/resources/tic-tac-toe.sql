@@ -45,7 +45,7 @@ CREATE TABLE IF NOT EXISTS tic_tac_toe_moves
     position   INTEGER   NOT NULL,
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
-    PRIMARY KEY (match_id, user_id, position),
+    PRIMARY KEY (match_id, position),
 
     FOREIGN KEY (match_id) REFERENCES tic_tac_toe_matches (id),
     FOREIGN KEY (user_id) REFERENCES tic_tac_toe_users (id),
@@ -75,5 +75,5 @@ VALUES (1, 1, 2, 3), -- lines
 
 -- populate users
 INSERT INTO tic_tac_toe_users (id, name) VALUES (1, 'José Arnaldo');
-INSERT INTO tic_tac_toe_users (id, name) VALUES (2, 'Maria Vitória');
+INSERT INTO tic_tac_toe_users (id, name) VALUES (2, 'Vitória Maria');
 INSERT INTO tic_tac_toe_users (id, name) VALUES (3, 'Yasmin Roberta');
