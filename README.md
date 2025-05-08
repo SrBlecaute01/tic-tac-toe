@@ -11,9 +11,18 @@ como rastreamento de jogadas, gerenciamento de turnos e detecção automática d
 ---
 
 ## 🛠️ Tecnologias Utilizadas
-- **Linguagem de Programação**: Java 
-- **Banco de Dados**: SQLite 
+- **Linguagem de Programação**: Java (com recursos `--enable-preview`)
+- **Banco de Dados**: SQLite
 - **Ferramenta de Build**: Maven
+- **Frameworks/Bibliotecas**:
+   - [Lombok](https://projectlombok.org/) para redução de código boilerplate
+   - [JLine](https://jline.github.io/) para interação no terminal
+   - [Apache Logback](https://logback.qos.ch/) para logging
+   - [MyBatis](https://mybatis.org/) para mapeamento objeto-relacional (ORM)
+   - [HikariCP](https://github.com/brettwooldridge/HikariCP) para gerenciamento de conexões
+   - [SQL Provider](https://github.com/Jaoow/sql-provider) para abstração de consultas SQL
+   - [AsciiTable](https://github.com/vdmeer/asciitable) para exibição de tabelas no terminal
+   - [SLF4J](http://www.slf4j.org/) como API de logging
 
 ---
 
